@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Google API</title>
+
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVFibjTMF6wEQUlCV_O5zILn5urQUZ6Zo&sensor=false&extension=.js"></script>
+	<script src="js/bundle.js"></script>
+
+</head>
+<body ng-app='googApp'>
+	<nav class="navbar navbar-default" ng-controller='navCtrl'>
+	  <div class="container-fluid">
+
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span></a>
+	    </div>
+
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a ui-sref='home'>Home <span class="sr-only">(current)</span></a></li>
+	        <li><a ng-click='getPhotos()'>Instagram</a></li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Visited <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li ng-repeat='post in instagram track by $index'><a href={{post.link}}><div><span>{{post.address}}</span></div></a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wish List <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li ng-repeat='loca in locations track by $index'><div><a class='place' ng-click='showWishes()'><span>{{loca.address}}</span></a><a ng-click='removeLocation(loca)' class='X'>X</a></div></li>
+	          </ul>
+	        </li>
+	      </ul>
+	      <form class="navbar-form navbar-left" role="search">
+	        <div class="form-group">
+	          <input type="text" class="form-control" ng-model='location.address' placeholder="Enter Address">
+	        </div>
+	        <button type="find" ng-click='getCoords()' class="btn btn-default">Add</button>
+	      </form>
+	      <ul class="nav navbar-nav navbar-right">
+            <li ng-show='username'>
+              <p class='navbar-text'>Hello {{username}}!</p>
+            </li>
+            <li ng-show='username'><a ng-click='logout()'>Log Out</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><a ng-hide='username' ui-sref='login'>Login/Register</a></li>
+          </ul>
+
+	    </div>
+	  </div>
+	</nav>
+	<ui-view></ui-view>
+</body>
+</html>
